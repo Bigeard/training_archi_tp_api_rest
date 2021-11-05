@@ -23,20 +23,13 @@
             "pages": 472,
             "description": "JavaScript lies at the heart of almost every modern web application, from social apps like Twitter to browser-based game frameworks like Phaser and Babylon. Though simple for beginners to pick up and play with, JavaScript is a flexible, complex language that you can use to build full-scale applications.",
             "website": "http://eloquentjavascript.net/",
-            "comments": []
-        },
-        {
-            "id": "536a9df9-3bb9-4426-a1bc-2a7ce08c4c9e",
-            "isbn": "9781491943533",
-            "title": "Practical Modern JavaScript",
-            "subtitle": "Dive into ES6 and the Future of JavaScript",
-            "author": "Nicolás Bevacqua",
-            "published": "2017-07-16T00:00:00.000Z",
-            "publisher": "O'Reilly Media",
-            "pages": 334,
-            "description": "To get the most out of modern JavaScript, you need learn the latest features of its parent specification, ECMAScript 6 (ES6). This book provides a highly practical look at ES6, without getting lost in the specification or its implementation details.",
-            "website": "https://github.com/mjavascript/practical-modern-javascript",
-            "comments": []
+            "comments": [
+                {
+                    "id": "3fc93d0e-a0ce-48cb-a5b7-aa83d1badbfc",
+                    "userId": "3ffda8e7-06a3-4154-96b6-e39260048200",
+                    "message": "Hello, I comment the book !"
+                }
+            ]
         },
         {
             "id": "f99d5969-0e1c-44a8-b15f-04aac97100f3",

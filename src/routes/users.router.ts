@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { UnknownUserError } from '../errors/unknown-user.error';
 import { UsersService } from '../services/users.service';
 import Auth from '../middlewares/auth';
+import { UserModel } from '../models/user.model';
 const usersRouter = Router();
 
 const usersService = new UsersService();
@@ -9,7 +10,7 @@ const usersService = new UsersService();
 
 /**
  * @openapi
- * /api/users/{userID}:
+ * /api/users/me:
  *   get:
  *     summary: Get Me (User).
  *     description: Get my profile (User).
@@ -23,6 +24,7 @@ const usersService = new UsersService();
  usersRouter.get('/me', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     try {
         const data = usersService.getUserByID(req.user.id);
+        delete data.password
         res.send(data)
     } catch (error) {
         res.status(400).send(error.message);
@@ -31,7 +33,7 @@ const usersService = new UsersService();
 
 /**
  * @openapi
- * /api/users/{userID}:
+ * /api/users/me:
  *   put:
  *     summary: Put Me (User).
  *     description: Put my profile (User).
@@ -43,9 +45,10 @@ const usersService = new UsersService();
  *                  schema:
  */
  usersRouter.put('/me', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
-    req.body = req.user.id;
+    req.body.id = req.user.id;
     try {
         const data = usersService.updateUser(req.body);
+        delete data.password
         res.send(data)
     } catch (error) {
         res.status(400).send(error.message);
@@ -117,6 +120,7 @@ usersRouter.get('/userId/:userID', Auth.token, Auth.role('administrator'), (req,
 usersRouter.post('/', (req, res) => {
     try {
         const data = usersService.createUser(req.body)
+        delete data.password
         res.send(data)
     } catch (error) {
         res.status(400).send(error.message)
@@ -147,6 +151,7 @@ usersRouter.post('/', (req, res) => {
  usersRouter.put('/:userID', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
         const data = usersService.updateUser(req.body);
+        delete data.password
         res.send(data)
     } catch (error) {
         res.status(400).send(error.message);

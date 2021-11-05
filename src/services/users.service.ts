@@ -13,7 +13,7 @@ export class UsersService {
     }
 
     public getUserByID(userID: string) {
-        return this.userDAO.getUserIndexByID(userID);
+        return this.userDAO.getByID(userID);
     }
 
     public createUser(user: UserModel) {
@@ -58,9 +58,9 @@ export class UsersService {
         }
 
         const user = this.userDAO.getByEmail(email);
-        // Security not return password
-        delete user.password
         if (user && user.password === password) {
+            // Security not save / return password
+            delete user.password
             const token = jwt.sign(
                 user,
                 process.env.TOKEN_KEY,

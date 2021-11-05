@@ -57,25 +57,18 @@ booksRouter.post('/', Auth.token, Auth.role('administrator'), (req, res) => {
 
 /**
  * @openapi
- * /api/books/{bookID}:
+ * /api/books:
  *   put:
  *     summary: Put book by id (Admin).
  *     description: Put book by id (Admin).
  *     tags: ['Books']
- *     parameters:
- *       - in: path
- *         name: bookID
- *         required: true
- *         description: String ID of the book.
- *         schema:
- *           type: string
  *     responses:
  *       200:
  *         content:
  *              application/json:
  *                  schema:
  */
-booksRouter.put('/:bookID', Auth.token, Auth.role('administrator'), (req, res) => {
+booksRouter.put('/', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
         const data = booksService.updateBook(req.body);
         res.send(data)

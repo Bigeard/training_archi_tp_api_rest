@@ -19,7 +19,7 @@ const ordersService = new OrdersService();
  *              application/json:
  *                  schema:
  */
- ordersRouter.post('/', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
+ ordersRouter.post('/me', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     try {
         const data = ordersService.createOrder(req.body)
         res.send(data)
@@ -41,7 +41,7 @@ const ordersService = new OrdersService();
  *              application/json:
  *                  schema:
  */
- ordersRouter.get('/', Auth.token, Auth.role('administrator'), (req: any, res) => {
+ ordersRouter.get('/me', Auth.token, Auth.role('administrator'), (req: any, res) => {
     const orders = ordersService.getAllOrders({"userId": req.user.id});
     res.status(200).send(orders);
 })
