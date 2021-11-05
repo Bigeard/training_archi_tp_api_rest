@@ -20,7 +20,7 @@ const booksService = new BooksService();
  *              application/json:
  *                  schema:
  */
-booksRouter.get('/', Auth.token, Auth.role('user'), (req, res) => {
+booksRouter.get('/', Auth.token, Auth.role('user', 'administrator'), (req, res) => {
     const books = booksService.getAllBooks(req.query);
     res.status(200).send(books);
 })
@@ -39,15 +39,6 @@ booksRouter.get('/', Auth.token, Auth.role('user'), (req, res) => {
  *         application/json:
  *           schema:
  *             type: object
- *             properties:
- *               email:
- *                 type: string
- *                 description: email !
- *                 example: postman@fake.com
- *               password:
- *                 type: string
- *                 description: email !
- *                 example: test
  *     responses:
  *       200:
  *         content:
@@ -114,7 +105,7 @@ booksRouter.put('/:bookID', Auth.token, Auth.role('administrator'), (req, res) =
  */
 booksRouter.delete('/:bookID', Auth.token, Auth.role('administrator'), (req: any, res) => {
     try {
-        booksService.deleteBook(req.params.bookID, req.book.id)
+        booksService.deleteBook(req.params.bookID)
     } catch (error) {
         if (error instanceof UnknownBookError) {
             res.status(404)
@@ -124,5 +115,45 @@ booksRouter.delete('/:bookID', Auth.token, Auth.role('administrator'), (req: any
         res.send(error.message)
     }
 })
+
+/**
+ * @openapi
+ * /api/books/{bookID}/comments:
+ *   post:
+ *     summary: Create a new comment (User).
+ *     description: Creates a new comment (User).
+ *     tags: ['Books']
+ *     parameters:
+ *       - in: path
+ *         name: bookID
+ *         required: true
+ *         description: String ID of the book.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               message:
+ *                 type: string
+ *                 description: message !
+ *                 example: Hello, I comment the book !
+ *     responses:
+ *       200:
+ *         content:
+ *              application/json:
+ *                  schema:
+ */
+ booksRouter.post('/:bookID/comments', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
+    try {
+        booksService.createComment(req.user.id, req.params.bookID, req.body.message)
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+})
+
 
 export default booksRouter;

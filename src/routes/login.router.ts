@@ -23,11 +23,11 @@ const usersService = new UsersService();
  *               email:
  *                 type: string
  *                 description: email !
- *                 example: postman@fake.com
+ *                 example: postman_admin@fake.com
  *               password:
  *                 type: string
- *                 description: email !
- *                 example: test
+ *                 description: password !
+ *                 example: test_admin
  *     responses:
  *       200:
  *         content:

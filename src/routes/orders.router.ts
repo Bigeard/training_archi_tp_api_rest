@@ -19,7 +19,7 @@ const ordersService = new OrdersService();
  *              application/json:
  *                  schema:
  */
- ordersRouter.post('/', Auth.token, Auth.role('user'), (req: any, res) => {
+ ordersRouter.post('/', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     try {
         ordersService.createOrder(req.body)
     } catch (error) {
@@ -66,7 +66,7 @@ const ordersService = new OrdersService();
  *              application/json:
  *                  schema:
  */
- ordersRouter.delete('/:orderID', Auth.token, Auth.role('user'), (req: any, res) => {
+ ordersRouter.delete('/:orderID', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     try {
         ordersService.deleteOrderUser(req.params.orderID, req.order.id, req.user.id)
     } catch (error) {
@@ -112,15 +112,6 @@ ordersRouter.get('/', Auth.token, Auth.role('administrator'), (req, res) => {
  *         application/json:
  *           schema:
  *             type: object
- *             properties:
- *               email:
- *                 type: string
- *                 description: email !
- *                 example: postman@fake.com
- *               password:
- *                 type: string
- *                 description: email !
- *                 example: test
  *     responses:
  *       200:
  *         content:
@@ -187,7 +178,7 @@ ordersRouter.put('/:orderID', Auth.token, Auth.role('administrator'), (req, res)
  */
 ordersRouter.delete('/:orderID', Auth.token, Auth.role('administrator'), (req: any, res) => {
     try {
-        ordersService.deleteOrder(req.params.orderID, req.order.id)
+        ordersService.deleteOrder(req.params.orderID)
     } catch (error) {
         if (error instanceof UnknownOrderError) {
             res.status(404)

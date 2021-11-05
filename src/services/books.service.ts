@@ -23,10 +23,7 @@ export class BooksService {
         return this.bookDAO.create(bookToCreate);
     }
 
-    public deleteBook(bookID: string, currentBookID: string) {
-        if (bookID === currentBookID) {
-            throw new Error('book cannot remove himself !')
-        }
+    public deleteBook(bookID: string) {
         const book = this.bookDAO.getByID(bookID);
         if (!book) {
             throw new UnknownBookError('unknown book')
@@ -45,6 +42,21 @@ export class BooksService {
         }
 
         return this.bookDAO.update(bookToUpdate)
+    }
+
+    public createComment(userId: string, bookID: string, message: string) {
+        const existingBook = this.bookDAO.getByID(bookID);
+        if (!existingBook) {
+            throw new UnknownBookError('unknown book')
+        }
+
+        existingBook.comments.push({
+            id: uuid.v4(),
+            userId,
+            message
+        })
+
+        return this.bookDAO.update(existingBook)
     }
 
     private checkBookToCreateIsValid(book: BookModel) {

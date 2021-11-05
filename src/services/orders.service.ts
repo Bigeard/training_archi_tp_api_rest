@@ -35,10 +35,7 @@ export class OrdersService {
         return this.orderDAO.delete(orderID);
     }
 
-    public deleteOrder(orderID: string, currentOrderID: string) {
-        if (orderID === currentOrderID) {
-            throw new Error('order cannot remove himself !')
-        }
+    public deleteOrder(orderID: string) {
         const order = this.orderDAO.getByID(orderID);
         if (!order) {
             throw new UnknownOrderError('unknown order')

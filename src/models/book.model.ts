@@ -1,3 +1,5 @@
+import { CommentModel } from "./comment.model";
+
 export interface BookModel {
     id: string;
     isbn: string;
@@ -9,4 +11,5 @@ export interface BookModel {
     pages: number;
     description: string;
     website: string;
+    comments: CommentModel[];
 }

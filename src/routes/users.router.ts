@@ -20,7 +20,7 @@ const usersService = new UsersService();
  *              application/json:
  *                  schema:
  */
- usersRouter.get('/me', Auth.token, Auth.role('User'), (req: any, res) => {
+ usersRouter.get('/me', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     try {
         usersService.getUserByID(req.user.id);
     } catch (error) {
@@ -41,7 +41,7 @@ const usersService = new UsersService();
  *              application/json:
  *                  schema:
  */
- usersRouter.put('/me', Auth.token, Auth.role('User'), (req: any, res) => {
+ usersRouter.put('/me', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     req.body = req.user.id;
     try {
         usersService.updateUser(req.body);
