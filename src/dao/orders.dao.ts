@@ -11,8 +11,10 @@ export class OrderDao {
         this.databaseConnection = DatabaseConnection.getConnection();
     }
 
-    public list(): OrderModel[] {
-        return this.databaseConnection.getData('/orders');
+    public list(params: any): OrderModel[] {
+        return this.databaseConnection.filter("/books", (book) =>
+            Object.keys(params).every((param, i) => book[param] === Object.values(params)[i])
+        );
     }
 
     public create(order: OrderModel): OrderModel {

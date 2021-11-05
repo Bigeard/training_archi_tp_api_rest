@@ -11,8 +11,10 @@ export class BookDao {
         this.databaseConnection = DatabaseConnection.getConnection();
     }
 
-    public list(): BookModel[] {
-        return this.databaseConnection.getData('/books');
+    public list(params: any): BookModel[] {
+    return this.databaseConnection.filter("/books", (book) =>
+            Object.keys(params).every((param, i) => book[param] === Object.values(params)[i])
+        );
     }
 
     public create(book: BookModel): BookModel {

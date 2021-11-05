@@ -7,8 +7,8 @@ const uuid = require('uuid')
 export class OrdersService {
     private orderDAO: OrderDao = new OrderDao()
 
-    public getAllOrders(): OrderModel[] {
-        return this.orderDAO.list()
+    public getAllOrders(params: any): OrderModel[] {
+        return this.orderDAO.list(params)
     }
 
     public createOrder(order: OrderModel) {
@@ -21,6 +21,18 @@ export class OrdersService {
             id: uuid.v4()
         }
         return this.orderDAO.create(orderToCreate);
+    }
+
+    public deleteOrderUser(orderID: string, currentOrderID: string, userId: string) {
+        // @Todo
+        if (orderID === currentOrderID) {
+            throw new Error('order cannot remove himself !')
+        }
+        const order = this.orderDAO.getByID(orderID);
+        if (!order) {
+            throw new UnknownOrderError('unknown order')
+        }
+        return this.orderDAO.delete(orderID);
     }
 
     public deleteOrder(orderID: string, currentOrderID: string) {

@@ -2,8 +2,8 @@
 Récuperer un user : GET http://${host}/api/users/userId
 Inscription : POST http://${host}/api/register
 Suppression user : DELETE http://${host}/api/users/:userId
-Modification mon profile : PUT http://${host}/api/profile
-Modification profile (mon user) : PUT http://${host}/api/profile
+Modification mon profile : PUT http://${host}/api/profile (ICI)
+Modification profile (mon user) : PUT http://${host}/api/profile (et ICI il y a deux fois la même)
 Modification user: PUT http://${host}/api/users/:userId
 
 [BOOKS]

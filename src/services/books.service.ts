@@ -7,8 +7,8 @@ const uuid = require('uuid')
 export class BooksService {
     private bookDAO: BookDao = new BookDao()
 
-    public getAllBooks(): BookModel[] {
-        return this.bookDAO.list()
+    public getAllBooks(params: any): BookModel[] {
+        return this.bookDAO.list(params);
     }
 
     public createBook(book: BookModel) {

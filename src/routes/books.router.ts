@@ -21,7 +21,7 @@ const booksService = new BooksService();
  *                  schema:
  */
 booksRouter.get('/', Auth.token, Auth.role('user'), (req, res) => {
-    const books = booksService.getAllBooks();
+    const books = booksService.getAllBooks(req.query);
     res.status(200).send(books);
 })
 
