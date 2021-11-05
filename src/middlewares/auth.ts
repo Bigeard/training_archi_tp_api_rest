@@ -24,10 +24,11 @@ export default class Auth {
     static role(...roles: string[]) {
         return (req: any, res: any, next: any) => {
             const { user } = req;
-            user.roles.forEach((e: string) => {
-                if (user && roles.includes(e)) next();
-            });
-            res.status(403).json({ message: "Forbidden" });
+            if (user.roles.some((e: string) => roles.includes(e))) {
+                next();
+            } else {
+                res.status(403).json({ message: "Forbidden" });
+            }
         };
     };
 }

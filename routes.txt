@@ -1,0 +1,23 @@
+[USERS]
+Récuperer un user : GET http://${host}/api/users/userId
+Inscription : POST http://${host}/api/register
+Suppression user : DELETE http://${host}/api/users/:userId
+Modification mon profile : PUT http://${host}/api/profile
+Modification profile (mon user) : PUT http://${host}/api/profile
+Modification user: PUT http://${host}/api/users/:userId
+
+[BOOKS]
+Rechercher/lister book : GET  http://${host}/api/books?isbn=xxx&title=yyy&....
+Afficher un livre : GET http://${host}/api/books/:bookId
+Ajouter un livre : POST http://${host}/api/books
+Modifier un livre : PUT http://${host}/api/books 
+
+[COMMENTS]
+Laisser un commentaire : POST http://${host}/api/books/:bookId/comments
+
+[ORDERS]
+Ajouter un livre : PUT http://${host}/api/cart
+Consulter le panier : GET http://${host}/api/cart
+Supprimer un élément du panier : DELETE http://${host}/api/cart/:cartItemId
+
+

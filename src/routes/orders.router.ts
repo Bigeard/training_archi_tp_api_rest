@@ -1,38 +1,38 @@
 import { Router } from 'express';
-import { UnknownBookError } from '../errors/unknown-book.error';
-import { BooksService } from '../services/books.service';
+import { UnknownOrderError } from '../errors/unknown-order.error';
+import { OrdersService } from '../services/orders.service';
 import Auth from '../middlewares/auth';
-const booksRouter = Router();
+const ordersRouter = Router();
 
-const booksService = new BooksService();
+const ordersService = new OrdersService();
 
 
 /**
  * @openapi
- * /api/books:
+ * /api/orders:
  *   get:
- *     summary: Retrieve a list of books.
- *     description: Retrieve a list of books (User).
- *     tags: ['Books']
+ *     summary: Retrieve a list of orders.
+ *     description: Retrieve a list of orders (User).
+ *     tags: ['Orders']
  *     responses:
  *       200:
  *         content:
  *              application/json:
  *                  schema:
  */
-booksRouter.get('/', Auth.token, Auth.role('user'), (req, res) => {
-    const books = booksService.getAllBooks();
-    res.status(200).send(books);
+ordersRouter.get('/', Auth.token, Auth.role('user'), (req, res) => {
+    const orders = ordersService.getAllOrders();
+    res.status(200).send(orders);
 })
 
 
 /**
  * @openapi
- * /api/books:
+ * /api/orders:
  *   post:
- *     summary: Create a new book (Admin).
- *     description: Creates a new book (Admin).
- *     tags: ['Books']
+ *     summary: Create a new order (Admin).
+ *     description: Creates a new order (Admin).
+ *     tags: ['Orders']
  *     requestBody:
  *       required: true
  *       content:
@@ -54,9 +54,9 @@ booksRouter.get('/', Auth.token, Auth.role('user'), (req, res) => {
  *              application/json:
  *                  schema:
  */
-booksRouter.post('/', Auth.token, Auth.role('administrator'), (req, res) => {
+ordersRouter.post('/', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
-        booksService.createBook(req.body)
+        ordersService.createOrder(req.body)
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -65,16 +65,16 @@ booksRouter.post('/', Auth.token, Auth.role('administrator'), (req, res) => {
 
 /**
  * @openapi
- * /api/books/{bookID}:
+ * /api/orders/{orderID}:
  *   put:
- *     summary: Put book by id (Admin).
- *     description: Put book by id (Admin).
- *     tags: ['Books']
+ *     summary: Put order by id (Admin).
+ *     description: Put order by id (Admin).
+ *     tags: ['Orders']
  *     parameters:
  *       - in: path
- *         name: bookID
+ *         name: orderID
  *         required: true
- *         description: String ID of the book.
+ *         description: String ID of the order.
  *         schema:
  *           type: string
  *     responses:
@@ -83,9 +83,9 @@ booksRouter.post('/', Auth.token, Auth.role('administrator'), (req, res) => {
  *              application/json:
  *                  schema:
  */
-booksRouter.put('/:bookID', Auth.token, Auth.role('administrator'), (req, res) => {
+ordersRouter.put('/:orderID', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
-        booksService.updateBook(req.body);
+        ordersService.updateOrder(req.body);
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -94,16 +94,16 @@ booksRouter.put('/:bookID', Auth.token, Auth.role('administrator'), (req, res) =
 
 /**
  * @openapi
- * /api/books/{bookID}:
+ * /api/orders/{orderID}:
  *   delete:
- *     summary: Delete book by id (Admin).
- *     description: Delete book by id (Admin).
- *     tags: ['Books']
+ *     summary: Delete order by id (Admin).
+ *     description: Delete order by id (Admin).
+ *     tags: ['Orders']
  *     parameters:
  *       - in: path
- *         name: bookID
+ *         name: orderID
  *         required: true
- *         description: String ID of the book.
+ *         description: String ID of the order.
  *         schema:
  *           type: string
  *     responses:
@@ -112,11 +112,11 @@ booksRouter.put('/:bookID', Auth.token, Auth.role('administrator'), (req, res) =
  *              application/json:
  *                  schema:
  */
-booksRouter.delete('/:bookID', Auth.token, Auth.role('administrator'), (req: any, res) => {
+ordersRouter.delete('/:orderID', Auth.token, Auth.role('administrator'), (req: any, res) => {
     try {
-        booksService.deleteBook(req.params.bookID, req.book.id)
+        ordersService.deleteOrder(req.params.orderID, req.order.id)
     } catch (error) {
-        if (error instanceof UnknownBookError) {
+        if (error instanceof UnknownOrderError) {
             res.status(404)
         } else {
             res.status(400)
@@ -125,4 +125,4 @@ booksRouter.delete('/:bookID', Auth.token, Auth.role('administrator'), (req: any
     }
 })
 
-export default booksRouter;
+export default ordersRouter;

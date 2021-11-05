@@ -51,7 +51,7 @@ export class UserDao {
         return null;
     }
 
-    private getUserIndexByID(userID: string): number {
+    public getUserIndexByID(userID: string): number {
         return this.databaseConnection.getIndex('/users', userID, 'id');
     }
 }

@@ -2,6 +2,8 @@ import express from 'express';
 import usersRouter from './routes/users.router';
 import loginRouter from './routes/login.router';
 import booksRouter from './routes/books.router';
+import ordersRouter from './routes/orders.router';
+
 const app = express();
 const port = 3000; // default port to listen
 const dotenv = require('dotenv')
@@ -15,6 +17,7 @@ app.use(express.json())
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/books', booksRouter)
+app.use('/api/orders', ordersRouter)
 
 // swagger configuration
 const swaggerJSDoc = require('swagger-jsdoc');
