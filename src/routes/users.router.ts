@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { UnknownUserError } from '../errors/unknown-user.error';
 import { UsersService } from '../services/users.service';
+import Auth from '../middlewares/auth';
 const usersRouter = Router();
 
 const usersService = new UsersService();
@@ -8,11 +9,17 @@ const usersService = new UsersService();
 
 /**
  * @openapi
- * /users:
+ * /api/users:
  *   get:
  *     summary: Retrieve a list of users
+ *     tags: ['Users']
+ *     responses:
+ *       200:
+ *         content:
+ *              application/json:
+ *                  schema:
  */
-usersRouter.get('/', (req, res) => {
+usersRouter.get('/', Auth.token, Auth.role('administrator'), (req, res) => {
     const users = usersService.getAllUsers();
     res.status(200).send(users);
 })
@@ -20,10 +27,16 @@ usersRouter.get('/', (req, res) => {
 
 /**
  * @openapi
- * /users:
+ * /api/users:
  *   post:
  *     summary: Create a new user
  *     description: creates a new user
+ *     tags: ['Users']
+ *     responses:
+ *       200:
+ *         content:
+ *              application/json:
+ *                  schema:
  */
 usersRouter.post('/', (req, res) => {
     try {
@@ -33,7 +46,28 @@ usersRouter.post('/', (req, res) => {
     }
 })
 
-usersRouter.put('/:userID', (req, res) => {
+
+/**
+ * @openapi
+ * /api/users/{userID}:
+ *   put:
+ *     summary: Put user by id.
+ *     description: Put user by id.
+ *     tags: ['Users']
+ *     parameters:
+ *       - in: path
+ *         name: userID
+ *         required: true
+ *         description: String ID of the user.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         content:
+ *              application/json:
+ *                  schema:
+ */
+usersRouter.put('/:userID', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
         usersService.updateUser(req.body);
     } catch (error) {
@@ -41,7 +75,28 @@ usersRouter.put('/:userID', (req, res) => {
     }
 })
 
-usersRouter.delete('/:userID', (req: any, res) => {
+
+/**
+ * @openapi
+ * /api/users/{userID}:
+ *   delete:
+ *     summary: Delete user by id.
+ *     description: Delete user by id.
+ *     tags: ['Users']
+ *     parameters:
+ *       - in: path
+ *         name: userID
+ *         required: true
+ *         description: String ID of the user.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         content:
+ *              application/json:
+ *                  schema:
+ */
+usersRouter.delete('/:userID', Auth.token, Auth.role('administrator'), (req: any, res) => {
     try {
         usersService.deleteUser(req.params.userID, req.user.id)
     } catch (error) {

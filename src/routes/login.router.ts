@@ -6,6 +6,34 @@ const loginRouter = Router();
 
 const usersService = new UsersService();
 
+/**
+ * @openapi
+ * /api/login:
+ *   post:
+ *     summary: Login user
+ *     description: Login user
+ *     tags: ['Login']
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: email !
+ *                 example: postman@fake.com
+ *               password:
+ *                 type: string
+ *                 description: email !
+ *                 example: test
+ *     responses:
+ *       200:
+ *         content:
+ *              application/json:
+ *                  schema:
+ */
 loginRouter.post('/', (request, response) => {
     try {
         const user = usersService.login(request.body.email, request.body.password)
