@@ -47,7 +47,8 @@ booksRouter.get('/', Auth.token, Auth.role('user', 'administrator'), (req, res) 
  */
 booksRouter.post('/', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
-        booksService.createBook(req.body)
+        const data = booksService.createBook(req.body)
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -76,7 +77,8 @@ booksRouter.post('/', Auth.token, Auth.role('administrator'), (req, res) => {
  */
 booksRouter.put('/:bookID', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
-        booksService.updateBook(req.body);
+        const data = booksService.updateBook(req.body);
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -105,7 +107,8 @@ booksRouter.put('/:bookID', Auth.token, Auth.role('administrator'), (req, res) =
  */
 booksRouter.delete('/:bookID', Auth.token, Auth.role('administrator'), (req: any, res) => {
     try {
-        booksService.deleteBook(req.params.bookID)
+        const data = booksService.deleteBook(req.params.bookID)
+        res.send(data)
     } catch (error) {
         if (error instanceof UnknownBookError) {
             res.status(404)
@@ -149,7 +152,8 @@ booksRouter.delete('/:bookID', Auth.token, Auth.role('administrator'), (req: any
  */
  booksRouter.post('/:bookID/comments', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     try {
-        booksService.createComment(req.user.id, req.params.bookID, req.body.message)
+        const data = booksService.createComment(req.user.id, req.params.bookID, req.body.message)
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message)
     }

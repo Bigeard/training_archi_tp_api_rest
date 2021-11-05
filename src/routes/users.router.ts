@@ -22,7 +22,8 @@ const usersService = new UsersService();
  */
  usersRouter.get('/me', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     try {
-        usersService.getUserByID(req.user.id);
+        const data = usersService.getUserByID(req.user.id);
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -44,7 +45,8 @@ const usersService = new UsersService();
  usersRouter.put('/me', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     req.body = req.user.id;
     try {
-        usersService.updateUser(req.body);
+        const data = usersService.updateUser(req.body);
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -91,7 +93,8 @@ usersRouter.get('/', Auth.token, Auth.role('administrator'), (req, res) => {
  */
 usersRouter.get('/userId/:userID', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
-        usersService.getUserByID(req.params.userID);
+        const data = usersService.getUserByID(req.params.userID);
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -113,7 +116,8 @@ usersRouter.get('/userId/:userID', Auth.token, Auth.role('administrator'), (req,
  */
 usersRouter.post('/', (req, res) => {
     try {
-        usersService.createUser(req.body)
+        const data = usersService.createUser(req.body)
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -142,7 +146,8 @@ usersRouter.post('/', (req, res) => {
  */
  usersRouter.put('/:userID', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
-        usersService.updateUser(req.body);
+        const data = usersService.updateUser(req.body);
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -171,7 +176,8 @@ usersRouter.post('/', (req, res) => {
  */
 usersRouter.delete('/:userID', Auth.token, Auth.role('administrator'), (req: any, res) => {
     try {
-        usersService.deleteUser(req.params.userID, req.user.id)
+        const data = usersService.deleteUser(req.params.userID, req.user.id)
+        res.send(data)
     } catch (error) {
         if (error instanceof UnknownUserError) {
             res.status(404)

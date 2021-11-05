@@ -21,7 +21,8 @@ const ordersService = new OrdersService();
  */
  ordersRouter.post('/', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     try {
-        ordersService.createOrder(req.body)
+        const data = ordersService.createOrder(req.body)
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -68,7 +69,8 @@ const ordersService = new OrdersService();
  */
  ordersRouter.delete('/:orderID', Auth.token, Auth.role('user', 'administrator'), (req: any, res) => {
     try {
-        ordersService.deleteOrderUser(req.params.orderID, req.order.id, req.user.id)
+        const data = ordersService.deleteOrderUser(req.params.orderID, req.order.id, req.user.id)
+        res.send(data)
     } catch (error) {
         if (error instanceof UnknownOrderError) {
             res.status(404)
@@ -120,7 +122,8 @@ ordersRouter.get('/', Auth.token, Auth.role('administrator'), (req, res) => {
  */
 ordersRouter.post('/', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
-        ordersService.createOrder(req.body)
+        const data = ordersService.createOrder(req.body)
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -149,7 +152,8 @@ ordersRouter.post('/', Auth.token, Auth.role('administrator'), (req, res) => {
  */
 ordersRouter.put('/:orderID', Auth.token, Auth.role('administrator'), (req, res) => {
     try {
-        ordersService.updateOrder(req.body);
+        const data = ordersService.updateOrder(req.body);
+        res.send(data)
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -178,7 +182,8 @@ ordersRouter.put('/:orderID', Auth.token, Auth.role('administrator'), (req, res)
  */
 ordersRouter.delete('/:orderID', Auth.token, Auth.role('administrator'), (req: any, res) => {
     try {
-        ordersService.deleteOrder(req.params.orderID)
+        const data = ordersService.deleteOrder(req.params.orderID)
+        res.send(data)
     } catch (error) {
         if (error instanceof UnknownOrderError) {
             res.status(404)

@@ -58,6 +58,8 @@ export class UsersService {
         }
 
         const user = this.userDAO.getByEmail(email);
+        // Security not return password
+        delete user.password
         if (user && user.password === password) {
             const token = jwt.sign(
                 user,
